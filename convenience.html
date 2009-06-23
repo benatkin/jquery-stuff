@@ -1,0 +1,29 @@
+<html>
+<head>
+  <title>convenience</title>
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="jquery.convenience.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $.each(['red', 'green'], function() {
+        var btn = $('<input>').attr({type: 'button', value: 'Frobnicate This!'}).addClass('frob');
+        $('<div>').addClass(this).css({backgroundColor: this}).appendTo($('body')).append(btn);
+      });
+      $('div').css({width: '200px', height: '200px', padding: '20px', 'float': 'left'});
+
+      $.convenience('frobnicate');
+      $('.green').frobnicate(function() {
+        console.log('frobbed!');
+        $(this).css({border: '5px solid black'});
+      });
+      $('.frob').click(function() {
+        console.log('clicked!');
+        $(this).frobnicate();
+      });
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>
+
