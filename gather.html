@@ -1,0 +1,83 @@
+<html>
+<head>
+  <title>gather</title>
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="jquery.convenience.js"></script>
+  <script type="text/javascript" src="jquery.json.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $.convenience('gather');
+      $('.gatherer').gather(function(e) {
+        $(this).data('fruits').push(e.result);
+      });
+      $('.fruit').gather(function() {
+        return $(this).text();
+      });
+      $('[value=gather]').click(function() {
+        $('.gatherer').data('fruits', []);
+        $('.fruit').gather();
+        $('.result').text($.toJSON($('.gatherer').data('fruits')));
+      });
+    });
+  </script>
+  <style type="text/css">
+    div {
+      padding-left: 20px;
+    }
+
+    div.gatherer {
+      padding: 3px;
+      border: 2px solid red;
+    }
+
+    span.fruit {
+      background-color: #f8f;
+    }
+
+    span.vegetable {
+      background-color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <p>
+    In this example, an event called "gather" is used to gather all fruits into an array.<br />
+    The event is called on each of the fruit spans.<br />
+    The fruit spans return the text inside of them when they receive the gather event.<br />
+    The events then bubble up to the getherer.<br />
+    The gatherer responds to the gather event by taking the result returned by the gather handler for
+    the fruit and appending it to an array stored using jQuery's data function.<br />
+    The gather event is triggered on the fruits by clicking the gather button.<br />
+    After the events complete, the click handler for the gather button takes the array from the gatherer,
+    serializes it to JSON, and displays it in a span next to the button.
+  </p>
+  <p>The gatherer div has a red border.</p>
+  <p>
+    <span class="fruit">fruit</span>
+    <span class="vegetable">vegetable</span>
+  </p>
+  <div class="gatherer">
+    fruits and veggies
+    <div>
+      green
+      <div><span class="fruit">pear</span></div>
+      <div><span class="vegetable">cucumber</span></div>
+      <div>
+        strong
+        <div><span class="fruit">kiwi</span></div>
+        <div><span class="vegetable">scallion</span></div>
+      </div>
+    </div>
+    <div>
+      red
+      <div><span class="fruit">raspberries</span></div>
+      <div><span class="vegetable">beets</span></div>
+    </div>
+  </div>
+  <p>
+    <input type="button" value="gather" />
+    <span class="result"></span>
+  </p>
+</body>
+</html>
+
